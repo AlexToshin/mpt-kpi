@@ -1,3 +1,4 @@
+import bcrypt
 from flask import Blueprint, jsonify, request, url_for
 from flask_login import login_user, logout_user
 from flask_mail import Message
@@ -11,7 +12,7 @@ auth_bp = Blueprint("auth", __name__)
 def login():
     data = request.json
     user = User.query.filter_by(email=data["email"]).first()
-    if user and user.check_password(data["password"]):
+    if user and bcrypt.checkpw(data["password"].encode('utf-8'), user.user_passhash.encode('utf-8')):
         login_user(user)
         return jsonify({"message": "Login successful"}), 200
     return jsonify({"error": "Invalid credentials"}), 401
