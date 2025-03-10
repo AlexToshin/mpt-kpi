@@ -19,7 +19,8 @@ class User(UserMixin, db.Model):
     phone_number = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
-    is_admin = db.Column(db.Boolean, default=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
+    role = db.relationship('Role', backref='users')
 
     position = db.relationship("Position", backref=db.backref("users", lazy=True))
 
@@ -28,3 +29,8 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False, unique=True)

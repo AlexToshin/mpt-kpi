@@ -40,7 +40,7 @@ mail.init_app(app)
 # Set up login behavior
 @login_manager.user_loader
 def load_user(user_id):
-    from backend.models import User
+    from models import User
     return User.query.get(int(user_id))
 
 login_manager.login_view = "auth.login"
