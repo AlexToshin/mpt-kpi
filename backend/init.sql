@@ -41,6 +41,13 @@ CREATE TABLE IF NOT EXISTS Certificates (
     FOREIGN KEY (criteria_id) REFERENCES Criteria(criteria_id)
 );
 
+CREATE TABLE IF NOT EXISTS Tokens (
+    token VARCHAR(255) NOT NULL PRIMARY KEY,
+    user_id INT NOT NULL,
+    expires_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
 INSERT INTO mpt_kpi.role VALUES ('1', 'Работник', '5', 'Работает');
 INSERT INTO mpt_kpi.users VALUES ('1', 'Иван', 'Иванов', 'Иванович', 'IvanII@mail.ru', '79251232233', 'dsadxz', 'Работник', 'IvanII', '0', '1');
 INSERT INTO mpt_kpi.criteria VALUES ('1', 'Доп. выходы', '1', '5');
