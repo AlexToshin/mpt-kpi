@@ -33,6 +33,7 @@ def users():
         users = User.query.all()
         return jsonify([{"id": u.id, "email": u.email} for u in users])
     elif request.method == "POST":
+
         # Используем новый декоратор для проверки роли
         @require_role("admin")
         def create_user():
